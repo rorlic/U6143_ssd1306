@@ -19,6 +19,7 @@
 
 
 char IPSource[20]={0};
+char Hostname[20]={0};
 int i2cd;
 
 // Init SSD1306
@@ -400,6 +401,11 @@ void LCD_DisplaySdMemory(void)
   }
 }
 
+void LCD_DisplayHostname(void) {
+  OLED_ClearLint(2,4);
+  OLED_ShowString(0,3,Hostname,8);
+}
+
 /*
 *According to the information
 */
@@ -416,6 +422,9 @@ void LCD_Display(unsigned char symbol)
     case 2:
       LCD_DisplaySdMemory();
     break;
+    case 3:
+      LCD_DisplayHostname();
+    break;
     default:
     break;
   }
@@ -425,6 +434,7 @@ void LCD_Display(unsigned char symbol)
 void FirstGetIpAddress(void)
 {
   strcpy(IPSource,GetIpAddress());     
+  gethostname(Hostname, sizeof(Hostname));
 }
 
 char* GetIpAddress(void)
